@@ -14,9 +14,9 @@ namespace thesis::random_permutation
 	private:
 	   std::mt19937 gen; 
 	   size_t size;
-	   BitVector content;
 	   
 	public:
+	   BitVector content;
 	/***
 	* Конструктор класса сперестановки, принимает на вход три параметра:
 	* content - массив данных для перестановки значений;
@@ -25,6 +25,7 @@ namespace thesis::random_permutation
 	* конструктор инициализирует соотвествующие private члены переданными параметрами.
 	***/
 	    Permutation(BitVector& content_, const size_t size_, std::mt19937& random_generator);
+	    Permutation(Permutation& perm): content(perm.content), size(perm.size), gen(perm.gen) {}
 
 	/***
 	* Данный метод проводит равновероятную перестановку данных внутри массива.

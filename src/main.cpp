@@ -3,38 +3,42 @@
 
 #include <iostream>
 
-#define n 8
 namespace rp = thesis::random_permutation;
 
 int main(int argc, char **argv)
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
+ 
+    size_t n = 8;
     uint8_t max_pt = std::pow(2, n) - 1;
-    for (uint8_t pt = 0; pt <= max_pt; pt += 1)
+    uint16_t potency = std::pow(2, n);
+    std::vector<bool> mask_ = {1, 0, 1, 1, 0, 0, 0, 1};
+    rp::BitVector mask (mask_);
+    double delta_mean = 0;
+    
+    int loop = 1000;
+    for (int i = 0; i < loop; i++) // прогон для усреднения
     {
-    	std::vector<bool> arr;
-    	uint8_t pt_copy = pt;
-    	for (size_t j = n-1; j >= 0; j -= 1)
-    	{
-    		if (pt_copy == 0)
-    		{
-    			arr.resize(n, 0);
-    			break; 
-    		}
-    		arr.push_back(pt_copy%2);
-    		pt_copy = pt_copy / 2;
-    	}
-
-	    rp::BitVector bv (arr);
-	    rp::Permutation perm(bv, n, gen);
-	    std::cout << "Content:         " << perm;
-	    perm.permute();
-	    std::cout << "Permuted Content:" << perm;
-	    std::cout << std::endl;
-	    
-	    if (pt == max_pt)
-	    	break;
-	}
+    	    std::random_device rd;
+    	    std::mt19937 gen(rd());
+	    double delta = 0;
+	    for (uint8_t pt = 0; pt <= max_pt; pt += 1) // прогон по всем текстам
+	    {
+		    rp::BitVector bv (pt, n);
+		    rp::Permutation perm(bv, n, gen);
+		    //std::cout << "Content:         " << perm;
+		    rp::Permutation no_perm (perm);
+		    perm.permute();
+		    //std::cout << "Permuted Content:" << perm;
+		    //std::cout << std::endl;
+		    if (vector_xor(perm.content, mask) == vector_xor(no_perm.content, mask))
+		    	delta += 1;
+		    if (pt == max_pt)
+		    	break;
+	    }
+    delta = std::pow(delta/potency, 2);
+    //std::cout << delta << std::endl; // среднее квадрата дельты по всем текстам
+    delta_mean += delta;
+    }
+    std::cout << "Final delta: " << delta_mean/loop << std::endl;
     return 0;
 }

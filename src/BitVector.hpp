@@ -21,18 +21,21 @@ namespace thesis::random_permutation
 	***/
 	
 	    BitVector();
+	    BitVector(const uint8_t text, const size_t size_);
 	    BitVector(std::vector<bool>& content);
+	    
 
 	/***
 	* Данный метод проводит равновероятную перестановку данных внутри массива.
-	***/
-	    BitVector vector_xor(BitVector& bv, BitVector& mask); 
+	***/ 
 	/***
 	* Данный метод выводит массив в выбранный поток.
 	***/
 	    friend std::ostream& operator<<(std::ostream& os, const BitVector& bv);
+	    friend bool operator==(const BitVector& bv1, const BitVector& bv2);
 	    
 	};
+	BitVector vector_xor(BitVector& bv, BitVector& mask);
 	
 }
 #endif
