@@ -18,11 +18,12 @@ int main(int argc, char **argv)
     int loop = 1000;
     for (int i = 0; i < loop; i++) // прогон для усреднения
     {
-    	    std::random_device rd;
-    	    std::mt19937 gen(rd());
+    	  
 	    double delta = 0;
 	    for (uint8_t pt = 0; pt <= max_pt; pt += 1) // прогон по всем текстам
 	    {
+	    	    std::random_device rd;
+    	    	    std::mt19937 gen(rd());
 		    rp::BitVector bv (pt, n);
 		    rp::Permutation perm(bv, n, gen);
 		    //std::cout << "Content:         " << perm;
