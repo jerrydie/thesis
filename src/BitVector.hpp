@@ -1,22 +1,17 @@
-#ifndef __RANDOM_PERMUTATION_HPP__
-#define __RANDOM_PERMUTATION_HPP__
+#ifndef __BIT_VECTOR_HPP__
+#define __BIT_VECTOR_HPP__
 
-#include <stdint.h>
 #include <random>
 #include <ostream>
 #include <vector>
-#include "BitVector.hpp"
 
 namespace thesis::random_permutation 
 {
-	class Permutation
-	{
-	private:
-	   std::mt19937 gen; 
-	   size_t size;
-	   BitVector content;
-	   
+	class BitVector
+	{	   
 	public:
+	    size_t size;
+	    std::vector<bool> content;
 	/***
 	* Конструктор класса сперестановки, принимает на вход три параметра:
 	* content - массив данных для перестановки значений;
@@ -24,16 +19,19 @@ namespace thesis::random_permutation
 	* random_generator - генератор случайных значений;
 	* конструктор инициализирует соотвествующие private члены переданными параметрами.
 	***/
-	    Permutation(BitVector& content_, const size_t size_, std::mt19937& random_generator);
+	
+	    BitVector();
+	    BitVector(std::vector<bool>& content);
 
 	/***
 	* Данный метод проводит равновероятную перестановку данных внутри массива.
 	***/
-	    void permute(); 
+	    BitVector vector_xor(BitVector& bv, BitVector& mask); 
 	/***
 	* Данный метод выводит массив в выбранный поток.
 	***/
-	    friend std::ostream& operator<<(std::ostream& os, const Permutation& pt);
+	    friend std::ostream& operator<<(std::ostream& os, const BitVector& bv);
+	    
 	};
 	
 }

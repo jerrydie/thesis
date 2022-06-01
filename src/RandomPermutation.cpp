@@ -6,7 +6,7 @@
 
 namespace thesis::random_permutation 
 {
-	Permutation::Permutation(std::vector<uint16_t> content_, const size_t size_, std::mt19937& random_generator) : size(size_), gen(random_generator), content(content_)
+	Permutation::Permutation(BitVector& content_, const size_t size_, std::mt19937& random_generator) : size(size_), gen(random_generator), content(content_)
 	    {}
 	
 	void Permutation::permute()
@@ -15,14 +15,13 @@ namespace thesis::random_permutation
 	    {
 	    	std::uniform_int_distribution<int> distribution(0,i);
 	    	int j = distribution(gen);
-	    	std::swap(content[i], content[j]);
+	    	std::swap(content.content[i], content.content[j]);
 	    }
 	}
 	
 	std::ostream& operator<<(std::ostream& os, const Permutation& pt)
 	{
-	    for( int i = 0; i < pt.size; i += 1)
-	    	os << " " << pt.content[i];
+	    os << " " << pt.content;
 	    os << std::endl;
 	    return os;
 	}
