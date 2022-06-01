@@ -13,29 +13,36 @@ namespace thesis::random_permutation
 	    size_t size;
 	    std::vector<bool> content;
 	/***
-	* Конструктор класса сперестановки, принимает на вход три параметра:
-	* content - массив данных для перестановки значений;
-	* size - размер массива данных;
-	* random_generator - генератор случайных значений;
-	* конструктор инициализирует соотвествующие private члены переданными параметрами.
+	* Пустой конструктор класса битового вектора.
 	***/
-	
-	    BitVector();
+	    BitVector() : size(0) {}
+	/***
+	* Конструктор класса битового вектора, принимает на вход два параметра:
+	* text - число, открытый текст;
+	* size - размер двоичного массива данных, в который записывается текст.
+	***/
 	    BitVector(const uint8_t text, const size_t size_);
+	/***
+	* Конструктор класса битового вектора, принимает на вход один параметр:
+	* content - двоичный массив данных.
+	***/
 	    BitVector(std::vector<bool>& content);
 	    
-
-	/***
-	* Данный метод проводит равновероятную перестановку данных внутри массива.
-	***/ 
+ 
 	/***
 	* Данный метод выводит массив в выбранный поток.
 	***/
 	    friend std::ostream& operator<<(std::ostream& os, const BitVector& bv);
+	/***
+	* Данный метод сравнивает два массива.
+	***/
 	    friend bool operator==(const BitVector& bv1, const BitVector& bv2);
+	/***
+	* Данный метод проводит побитовое сложение массивов (логическое или).
+	***/
+	    friend BitVector operator+(BitVector& bv, BitVector& mask);
 	    
 	};
-	BitVector vector_xor(BitVector& bv, BitVector& mask);
 	
 }
 #endif

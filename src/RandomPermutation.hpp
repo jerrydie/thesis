@@ -18,13 +18,16 @@ namespace thesis::random_permutation
 	public:
 	   BitVector content;
 	/***
-	* Конструктор класса сперестановки, принимает на вход три параметра:
+	* Конструктор класса перестановки, принимает на вход три параметра:
 	* content - массив данных для перестановки значений;
 	* size - размер массива данных;
-	* random_generator - генератор случайных значений;
-	* конструктор инициализирует соотвествующие private члены переданными параметрами.
+	* random_generator - генератор случайных значений.
 	***/
 	    Permutation(BitVector& content_, const size_t size_, std::mt19937& random_generator);
+	    
+	 /***
+	* Конструктор класса перестановки, принимает на вход существующий член класса.
+	***/ 
 	    Permutation(Permutation& perm): content(perm.content), size(perm.size), gen(perm.gen) {}
 
 	/***

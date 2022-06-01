@@ -8,8 +8,7 @@ namespace thesis::random_permutation
 {
 	BitVector::BitVector(std::vector<bool>& content_) : size(content_.size()), content(content_)
 	    {}
-	BitVector::BitVector() : size(0)
-	    {}
+
 	BitVector::BitVector(const uint8_t text, const size_t size_)
 	{
 		size = size_;
@@ -25,7 +24,7 @@ namespace thesis::random_permutation
 	    		text_copy = text_copy / 2;
 	    	}
 	}
-	BitVector vector_xor(BitVector& bv, BitVector& mask)
+	BitVector operator+(BitVector& bv, BitVector& mask)
 	{
 	    std::vector<bool> res;
 	    for( int i = 0; i < bv.size; i += 1)

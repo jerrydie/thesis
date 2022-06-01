@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 		    perm.permute();
 		    //std::cout << "Permuted Content:" << perm;
 		    //std::cout << std::endl;
-		    if (vector_xor(perm.content, mask) == vector_xor(no_perm.content, mask))
+		    if ((perm.content + mask) == (no_perm.content + mask))
 		    	delta += 1;
 		    if (pt == max_pt)
 		    	break;
