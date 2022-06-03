@@ -4,7 +4,7 @@
 
 
 
-namespace thesis::random_permutation 
+namespace thesis
 {
 	BitVector::BitVector(std::vector<bool>& content_) : size(content_.size()), content(content_)
 	    {}
@@ -29,7 +29,7 @@ namespace thesis::random_permutation
 	    std::vector<bool> res;
 	    for( int i = 0; i < bv.size; i += 1)
 	    {
-	    	res.push_back(bv.content[i] || mask.content[i]);
+	    	res.push_back(bv.content[i] && mask.content[i]);
 	    }
 	    BitVector r (res);
 	    return r;

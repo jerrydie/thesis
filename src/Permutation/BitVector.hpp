@@ -5,7 +5,7 @@
 #include <ostream>
 #include <vector>
 
-namespace thesis::random_permutation 
+namespace thesis 
 {
 	class BitVector
 	{	   
