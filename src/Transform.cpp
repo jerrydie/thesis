@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <algorithm>
 #include <cmath>
+#include <random>
 
 
 namespace thesis
@@ -49,36 +50,87 @@ namespace thesis
 	
 	bool masking (std::vector<bool>& mask1, std::vector<bool>& text1, std::vector<bool>& mask2, std::vector<bool>& text2)
 	{
+		std::size_t bits1 = 0;
+		std::size_t bits2 = 0;
 		for (int i = 0; i < mask1.size(); i += 1)
 		{
-			if( (mask1[i] && text1[i]) ^ (mask2[i] && text2[i]) )
-				return false;
+			bits1 += (mask1[i] && text1[i]);
+			bits2 += (mask2[i] && text2[i]);
 		}
-		return true;
+		return ((bits1 & 1) == (bits2 & 1));
+			
 	}
 	
-	Shuffle::Shuffle(std::mt19937& g, distr_t& D, std::size_t size) : size(size)
+	void RandomPermutation(std::size_t inLen, std::vector<uint32_t>& function){
+
+	    uint32_t size(1 << inLen);
+
+	    static std::random_device rdev;
+	    static std::mt19937 e(rdev());
+	    static std::uniform_int_distribution<uint32_t> getAddr(0,size-1);
+
+	    int i;
+	    int addr;
+	    bool *x = new bool[size];
+
+	    for (i = 0; i != size; ++i)
+		x[i] = function[i] = 0;
+
+	    for (i = 0; i != size; ++i){
+		do{
+		    addr = getAddr(e);
+		}while(x[addr] != 0);
+		function[addr] = i;
+		x[addr] = 1;
+	    }
+
+	    delete[] x;
+	}
+
+	Shuffle::Shuffle(std::size_t size, uint8_t radix) : size(size) // std::mt19937& g, distr_t& D, 
 	{
-		for(int i = 0; i < size; i += 1)
+		for(int i = 0; i < std::pow(radix, size); i += 1)
 			shuffle.push_back(i);
-		std::vector<int>::iterator first = shuffle.begin();
-		std::vector<int>::iterator last  = shuffle.end();
+			
+		RandomPermutation(size, shuffle);
+		/*
+		std::vector<uint32_t>::iterator first = shuffle.begin();
+		std::vector<uint32_t>::iterator last  = shuffle.end();
 		diff_t n = last - first;
 		for(diff_t i = n - 1; i > 0; i -= 1)
 		{
 			using std::swap;
 			swap(first[i], first[D(g, param_t(0, i))]);
 		}
+		*/
 	}
 	
-	std::vector<bool> Shuffle::shuffle_vector(std::vector<bool>& pt)
+	uint32_t Shuffle::shuffle_vector(uint32_t pt)
 	{
-		std::vector<bool> ct (size, 0);
-		for(int i = 0; i < size; i += 1)
-		{
-			ct[i] = pt[shuffle[i]];
-		}
+		uint32_t ct = shuffle[pt];
 		return ct;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
 
 }

@@ -33,16 +33,19 @@ namespace thesis
 	***/
 	bool masking (std::vector<bool>& mask1, std::vector<bool>& text1, std::vector<bool>& mask2, std::vector<bool>& text2);
 	
+	void RandomPermutation(std::size_t inLen, std::vector<uint32_t>& function);
 	//template<class RandomIt, class URBG>
 	class Shuffle
 	{
 
-		std::vector<int> shuffle;
+		std::vector<uint32_t> shuffle;
 		std::size_t size;
+		uint32_t shuffle_num;
+		
 		
 		public:
-		Shuffle(std::mt19937& g, distr_t& D, std::size_t size);
-		std::vector<bool> shuffle_vector(std::vector<bool>& pt);
+		Shuffle(std::size_t size, uint8_t radix);
+		uint32_t shuffle_vector(uint32_t pt);
 		
 		
 	};

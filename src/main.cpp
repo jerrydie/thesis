@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     
 	
     double delta_mean = 0;
-    int loop = 1000;
+    int loop = 10000;
     
     for (int i = 0; i < loop; i++) // прогон для усреднения
     {
@@ -33,15 +33,16 @@ int main(int argc, char **argv)
     	    std::mt19937 gen(rd());
     	    distr_t D;
 	    double delta = 0;
-	    thesis::Shuffle s (gen, D, n);
+	    thesis::Shuffle s (n, radix);
 	    
 	    for (uint32_t pt = 0; pt <= max_pt; pt += 1) // прогон по всем текстам
 	    {
-	    	    
-		    std::vector<bool> pt_ = thesis::split(pt, n);
 		    
 
-		    std::vector<bool> ct_ = s.shuffle_vector(pt_);
+		    uint32_t ct = s.shuffle_vector(pt);
+		    //std::cout << ct << std::endl;
+		    std::vector<bool> pt_ = thesis::split(pt, n);
+		    std::vector<bool> ct_ = thesis::split(ct, n);
 		    
 		    /*
 		    std::cout << "Plaintext: ";
@@ -56,9 +57,9 @@ int main(int argc, char **argv)
 		    std::cout << std::endl;
 		    */
 
-		    if (thesis::masking(mask_, ct_, mask_, pt_))
-		    {
-		    	delta += 1;
+		    //if (thesis::masking(mask_, ct_, mask_, pt_))
+		    //{
+		    //	delta += 1;
 		    	
 			/*    
 		    	std::cout << "Plaintext: ";
@@ -71,11 +72,15 @@ int main(int argc, char **argv)
 		    	std::cout << " " << std::setw(2) << (int)ct_[j];
 		    std::cout << std::endl;
 			*/
-		    }
-		    if (pt == max_pt)
-		    	break;
+		    //}
+		    
+		    delta += thesis::masking(mask_, ct_, mask_, pt_);
+		    
+		    //if (pt == max_pt)
+		    	//break;
 	    }
 	    delta = std::pow(2*delta/potency - 1, 2);
+	    //delta = 2*delta/potency - 1;
 	    //std::cout << "Delta: " << delta << std::endl; // среднее квадрата дельты по всем текстам
 	    delta_mean += delta;
     
