@@ -34,6 +34,17 @@ namespace thesis
 	bool masking (std::vector<bool>& mask1, std::vector<bool>& text1, std::vector<bool>& mask2, std::vector<bool>& text2);
 	
 	//template<class RandomIt, class URBG>
-	void shuffle(std::vector<bool>::iterator first, std::vector<bool>::iterator last, std::mt19937& g, distr_t& D);
+	class Shuffle
+	{
+
+		std::vector<int> shuffle;
+		std::size_t size;
+		
+		public:
+		Shuffle(std::mt19937& g, distr_t& D, std::size_t size);
+		std::vector<bool> shuffle_vector(std::vector<bool>& pt);
+		
+		
+	};
 }
 #endif

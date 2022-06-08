@@ -57,14 +57,28 @@ namespace thesis
 		return true;
 	}
 	
-	//template<class RandomIt, class URBG>
-	void shuffle(std::vector<bool>::iterator first, std::vector<bool>::iterator last, std::mt19937& g, distr_t& D)
-	{	 
-
-	    diff_t n = last - first;
-	    for (diff_t i = n-1; i > 0; --i) {
-		using std::swap;
-		swap(first[i], first[D(g, param_t(0, i))]);
-	    }
+	Shuffle::Shuffle(std::mt19937& g, distr_t& D, std::size_t size) : size(size)
+	{
+		for(int i = 0; i < size; i += 1)
+			shuffle.push_back(i);
+		std::vector<int>::iterator first = shuffle.begin();
+		std::vector<int>::iterator last  = shuffle.end();
+		diff_t n = last - first;
+		for(diff_t i = n - 1; i > 0; i -= 1)
+		{
+			using std::swap;
+			swap(first[i], first[D(g, param_t(0, i))]);
+		}
 	}
+	
+	std::vector<bool> Shuffle::shuffle_vector(std::vector<bool>& pt)
+	{
+		std::vector<bool> ct (size, 0);
+		for(int i = 0; i < size; i += 1)
+		{
+			ct[i] = pt[shuffle[i]];
+		}
+		return ct;
+	}
+
 }

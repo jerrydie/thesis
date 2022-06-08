@@ -33,14 +33,15 @@ int main(int argc, char **argv)
     	    std::mt19937 gen(rd());
     	    distr_t D;
 	    double delta = 0;
+	    thesis::Shuffle s (gen, D, n);
 	    
 	    for (uint32_t pt = 0; pt <= max_pt; pt += 1) // прогон по всем текстам
 	    {
 	    	    
-		    std::vector<bool> ct_ = thesis::split(pt, n);
+		    std::vector<bool> pt_ = thesis::split(pt, n);
 		    
-		    std::vector<bool> pt_ = ct_;
-		    thesis::shuffle(ct_.begin(), ct_.end(), gen, D);
+
+		    std::vector<bool> ct_ = s.shuffle_vector(pt_);
 		    
 		    /*
 		    std::cout << "Plaintext: ";
