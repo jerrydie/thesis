@@ -36,7 +36,7 @@ Data length: 8, Data potency: 256, $\dfrac{1}{2^8} = 0.00390625$
 |  0  1  1  1  1  0  0  0        |                      0.00391597
 
 
-Data length: 8, Data potency: 128, $dfrac{1}{2^7} = 0.0078125$
+Data length: 8, Data potency: 128, $\dfrac{1}{2^7} = 0.0078125$
 |Mask                            |Mean square delta
 |--------------------------------|--------------------------------
 |  0  0  0  0  0  0  0  0        |                               1
