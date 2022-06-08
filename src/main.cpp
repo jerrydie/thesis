@@ -12,8 +12,8 @@ int main(int argc, char **argv)
     
     uint16_t radix = 2;
     size_t n = 24;
-    uint32_t max_pt = std::pow(radix, n)/2 - 1;
-    uint32_t potency = std::pow(radix, n)/2;
+    uint32_t max_pt = std::pow(radix, n-2) - 1;
+    uint32_t potency = std::pow(radix, n-2);
     
     std::cout << "Data length: " << n << ", Data potency: " << potency << std::endl;
     std::cout << "|Mask                                        " << "|Mean square delta"           
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     	
 
     //uint32_t mask = distr(gen1);
-    for (uint32_t mask = 1; mask < 3; mask += 1)
+    for (uint32_t mask = 3; mask < 4; mask += 1)
     {
 	    std::vector<bool> mask_ = thesis::split(mask, n);  
 	    
